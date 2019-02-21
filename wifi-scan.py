@@ -7,9 +7,6 @@ def snif():
 	ap_list = set()
 	while True :
 		pkt = rawSocket.recvfrom(3200)[0]
-		print ('----------------Start------------------')
-		print (pkt)
-		print ('----------------End------------------')
 		if hex(pkt[36]) == "0x80" :
 			pos_ssid_start = 74
 			pos_ssid_end = 74 + int(pkt[73])
@@ -21,6 +18,7 @@ def snif():
 				if i < 57 :
 					mac_adr += ':'
 			mac_adr = mac_adr.replace('0x','')
-			print("SSID : %s, Mac : %s" % (pkt[pos_ssid_start:pos_ssid_end].decode('utf-8'),mac_adr))
+			channel = pkt[98]
+			print("SSID : %s, Mac : %s,  Channel %s" % (pkt[pos_ssid_start:pos_ssid_end].decode('utf-8'),mac_adr,channel))
 
 snif()
